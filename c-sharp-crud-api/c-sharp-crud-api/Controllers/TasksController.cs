@@ -28,6 +28,8 @@ namespace c_sharp_crud_api.Controllers
 
         // GET api/<TasksController>/5
         [HttpGet("{id}")]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
         public IActionResult Get(int id)
         {
             var tasks = _board.Tasks.ToList();
@@ -40,6 +42,8 @@ namespace c_sharp_crud_api.Controllers
 
         // POST api/<TasksController>
         [HttpPost]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(Models.Task), 202)]
         public IActionResult Post([FromBody] Models.Task task)
         {
             var tasks = _board.Tasks.ToList();
@@ -55,6 +59,8 @@ namespace c_sharp_crud_api.Controllers
 
         // PUT api/<TasksController>/5
         [HttpPut("{id}")]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
         public IActionResult Put(int id, [FromBody] Models.Task task)
         {
             var tasks = _board.Tasks.ToList();
@@ -75,6 +81,8 @@ namespace c_sharp_crud_api.Controllers
 
         // DELETE api/<TasksController>/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
         public IActionResult Delete(int id)
         {
             var tasks = _board.Tasks.ToList();
