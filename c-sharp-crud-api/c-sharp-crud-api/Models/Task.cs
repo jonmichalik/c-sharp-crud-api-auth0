@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace c_sharp_crud_api.Models
+﻿namespace c_sharp_crud_api.Models
 {
     public class Task
     {

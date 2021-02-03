@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using c_sharp_crud_api.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace c_sharp_crud_api.Controllers
 {
@@ -38,8 +38,9 @@ namespace c_sharp_crud_api.Controllers
         }
 
         // POST api/<TasksController>
-        [HttpPost]
+        [HttpPost, Authorize]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(typeof(Models.Task), 202)]
         public IActionResult Post([FromBody] Models.Task task)
         {
@@ -53,7 +54,8 @@ namespace c_sharp_crud_api.Controllers
         }
 
         // PUT api/<TasksController>/5
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         [ProducesResponseType(200)]
         public IActionResult Put(int id, [FromBody] Models.Task task)
@@ -72,7 +74,8 @@ namespace c_sharp_crud_api.Controllers
         }
 
         // DELETE api/<TasksController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         [ProducesResponseType(200)]
         public IActionResult Delete(int id)

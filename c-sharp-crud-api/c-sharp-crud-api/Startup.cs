@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,15 @@ namespace c_sharp_crud_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["Auth0:Domain"];
+                options.Audience = Configuration["Auth0:Identifier"];
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -53,6 +63,8 @@ namespace c_sharp_crud_api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseAuthentication();
 
             var context = app.ApplicationServices.GetService<TaskBoard>();
             AddStartingTasks(context);
