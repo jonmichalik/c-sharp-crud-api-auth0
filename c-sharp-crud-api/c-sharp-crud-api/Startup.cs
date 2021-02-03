@@ -1,17 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using c_sharp_crud_api.Data;
 
 namespace c_sharp_crud_api
@@ -70,9 +63,9 @@ namespace c_sharp_crud_api
             var newTask = new Models.Task()
             {
                 Id = 1,
-                Name = "Test",
-                Description = "This is a test",
-                Status = Models.TaskStatus.Defined
+                Name = "C# CRUD API Walkthrough",
+                Description = "Finish a C# CRUD API tutorial and deploy with Visual Studio to Azure",
+                Status = "Defined"
             };
 
             context.Tasks.Add(newTask);

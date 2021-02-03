@@ -21,9 +21,7 @@ namespace c_sharp_crud_api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var tasks = _board.Tasks.ToList();
-
-            return Ok(tasks);
+            return Ok(_board.Tasks);
         }
 
         // GET api/<TasksController>/5
@@ -32,10 +30,9 @@ namespace c_sharp_crud_api.Controllers
         [ProducesResponseType(200)]
         public IActionResult Get(int id)
         {
-            var tasks = _board.Tasks.ToList();
-
-            var task = tasks.Where(t => t.Id == id).FirstOrDefault();
-            if (task is null) return NotFound();
+            var task = _board.Tasks.Where(t => t.Id == id).FirstOrDefault();
+            if (task is null) 
+                return NotFound();
 
             return Ok(task);
         }
@@ -46,9 +43,7 @@ namespace c_sharp_crud_api.Controllers
         [ProducesResponseType(typeof(Models.Task), 202)]
         public IActionResult Post([FromBody] Models.Task task)
         {
-            var tasks = _board.Tasks.ToList();
-
-            if (tasks.Any(t => t.Id == task.Id))
+            if (_board.Tasks.Any(t => t.Id == task.Id))
                 return BadRequest("Id already exists");
 
             _board.Tasks.Add(task);
@@ -63,12 +58,9 @@ namespace c_sharp_crud_api.Controllers
         [ProducesResponseType(200)]
         public IActionResult Put(int id, [FromBody] Models.Task task)
         {
-            var tasks = _board.Tasks.ToList();
-
-            var checkTask = tasks.Where(t => t.Id == id).FirstOrDefault();
-            if (checkTask is null) 
+            var checkTask = _board.Tasks.Where(t => t.Id == id).FirstOrDefault();
+            if (checkTask is null)
                 return NotFound();
-
 
             checkTask.Name = task.Name;
             checkTask.Description = task.Description;
@@ -85,13 +77,11 @@ namespace c_sharp_crud_api.Controllers
         [ProducesResponseType(200)]
         public IActionResult Delete(int id)
         {
-            var tasks = _board.Tasks.ToList();
-
-            var checkTask = tasks.Where(t => t.Id == id).FirstOrDefault();
-            if (checkTask is null)
+            var task = _board.Tasks.Where(t => t.Id == id).FirstOrDefault();
+            if (task is null)
                 return NotFound();
 
-            _board.Remove(checkTask);
+            _board.Remove(task);
             _board.SaveChanges();
 
             return Ok();
