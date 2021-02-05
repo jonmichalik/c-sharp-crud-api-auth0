@@ -38,14 +38,12 @@ namespace c_sharp_crud_api.Controllers
         }
 
         // POST api/<TasksController>
-        [HttpPost, Authorize]
-        [ProducesResponseType(typeof(string), 400)]
+        [HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
         [ProducesResponseType(401)]
-        [ProducesResponseType(typeof(Models.Task), 202)]
+        [ProducesResponseType(typeof(Models.Task), 201)]
         public IActionResult Post([FromBody] Models.Task task)
         {
-            if (_board.Tasks.Any(t => t.Id == task.Id))
-                return BadRequest("Id already exists");
+            task.Id = _board.NextId();
 
             _board.Tasks.Add(task);
             _board.SaveChanges();
@@ -54,7 +52,7 @@ namespace c_sharp_crud_api.Controllers
         }
 
         // PUT api/<TasksController>/5
-        [HttpPut("{id}"), Authorize]
+        [HttpPut("{id}"), Authorize(AuthenticationSchemes = "Bearer")]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         [ProducesResponseType(200)]
@@ -74,10 +72,10 @@ namespace c_sharp_crud_api.Controllers
         }
 
         // DELETE api/<TasksController>/5
-        [HttpDelete("{id}"), Authorize]
+        [HttpDelete("{id}"), Authorize(AuthenticationSchemes = "Bearer")]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         public IActionResult Delete(int id)
         {
             var task = _board.Tasks.Where(t => t.Id == id).FirstOrDefault();
@@ -87,7 +85,7 @@ namespace c_sharp_crud_api.Controllers
             _board.Remove(task);
             _board.SaveChanges();
 
-            return Ok();
+            return NoContent();
         }
     }
 }

@@ -59,12 +59,12 @@ namespace c_sharp_crud_api
 
             app.UseAuthorization();
 
+            app.UseAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            app.UseAuthentication();
 
             var context = app.ApplicationServices.GetService<TaskBoard>();
             AddStartingTasks(context);
