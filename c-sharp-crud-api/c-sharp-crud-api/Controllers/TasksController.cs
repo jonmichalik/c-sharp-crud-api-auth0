@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
-using c_sharp_crud_api.Data;
 using Microsoft.AspNetCore.Authorization;
 
 namespace c_sharp_crud_api.Controllers
@@ -10,9 +9,9 @@ namespace c_sharp_crud_api.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
-        private readonly TaskBoard _board;
+        private readonly Data.TaskBoard _board;
 
-        public TasksController(TaskBoard board)
+        public TasksController(Data.TaskBoard board)
         {
             _board = board;
         }
@@ -68,7 +67,7 @@ namespace c_sharp_crud_api.Controllers
 
             _board.SaveChanges();
 
-            return Ok(task);
+            return Ok(checkTask);
         }
 
         // DELETE api/<TasksController>/5

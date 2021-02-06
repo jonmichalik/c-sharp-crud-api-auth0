@@ -6,13 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using c_sharp_crud_api.Data;
 
 namespace c_sharp_crud_api
 {
     public class Startup
     {
-        public static TaskBoard board;
+        public static Data.TaskBoard board;
 
         public Startup(IConfiguration configuration)
         {
@@ -40,7 +39,7 @@ namespace c_sharp_crud_api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "c_sharp_crud_api", Version = "v1" });
             });
 
-            services.AddDbContext<TaskBoard>(o => o.UseInMemoryDatabase("TaskBoard"), ServiceLifetime.Singleton);
+            services.AddDbContext<Data.TaskBoard>(o => o.UseInMemoryDatabase("TaskBoard"), ServiceLifetime.Singleton);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,11 +65,11 @@ namespace c_sharp_crud_api
                 endpoints.MapControllers();
             });
 
-            var context = app.ApplicationServices.GetService<TaskBoard>();
+            var context = app.ApplicationServices.GetService<Data.TaskBoard>();
             AddStartingTasks(context);
         }
 
-        private static void AddStartingTasks(TaskBoard context)
+        private static void AddStartingTasks(Data.TaskBoard context)
         {
             var newTask = new Models.Task()
             {
